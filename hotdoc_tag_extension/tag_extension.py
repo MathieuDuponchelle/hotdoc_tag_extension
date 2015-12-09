@@ -112,7 +112,7 @@ class TagExtension(BaseExtension):
         for prototype in tag_prototypes:
             validator = validator_from_prototype(prototype)
             if validator:
-                print "Registering multiple choice tag %s with choices %s and default %s" % \
+                print ("Registering multiple choice tag %s with choices %s and default %s" %
                         (validator.name, validator.choices, validator.default))
                 doc_tool.register_tag_validator(validator)
 
