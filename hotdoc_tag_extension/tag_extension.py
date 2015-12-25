@@ -133,7 +133,7 @@ class TagExtension(BaseExtension):
     def setup(self):
         for extension in self.doc_tool.extensions.values():
             formatter = extension.get_formatter(self.doc_tool.output_format)
-            formatter.formatting_symbol_signals[Symbol].connect(self.__formatting_symbol)
+            formatter.formatting_symbol_signal.connect(self.__formatting_symbol)
 
     def __formatting_symbol(self, symbol):
         if isinstance(symbol, QualifiedSymbol):
