@@ -1,4 +1,5 @@
 from hotdoc.core.base_extension import BaseExtension
+from hotdoc.core.base_formatter import Formatter
 from hotdoc.core.comment_block import TagValidator
 from hotdoc.core.symbols import *
 
@@ -129,9 +130,7 @@ class TagExtension(BaseExtension):
             self.blacklists.append(blacklist)
 
     def setup(self):
-        for extension in self.doc_tool.extensions.values():
-            formatter = extension.get_formatter(self.doc_tool.output_format)
-            formatter.formatting_symbol_signal.connect(self.__formatting_symbol)
+        Formatter.formatting_symbol_signal.connect(self.__formatting_symbol)
 
     def __formatting_symbol(self, formatter, symbol):
         if isinstance(symbol, QualifiedSymbol):
