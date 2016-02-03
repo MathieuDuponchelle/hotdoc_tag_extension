@@ -103,8 +103,8 @@ def parse_choice_blacklist(blacklist):
 class TagExtension(BaseExtension):
     EXTENSION_NAME='core-tags'
 
-    def __init__(self, doc_tool, args):
-        BaseExtension.__init__(self, doc_tool, args)
+    def __init__(self, doc_repo, args):
+        BaseExtension.__init__(self, doc_repo, args)
 
         self.blacklists = []
 
@@ -113,7 +113,7 @@ class TagExtension(BaseExtension):
         for prototype in tag_prototypes:
             validator = validator_from_prototype(prototype)
             if validator:
-                doc_tool.register_tag_validator(validator)
+                doc_repo.register_tag_validator(validator)
 
         blacklist_prototypes = args.get('choices_blacklist', [])
 
@@ -122,7 +122,7 @@ class TagExtension(BaseExtension):
             if not blacklist:
                 continue
 
-            validator = doc_tool.tag_validators.get (blacklist.name)
+            validator = doc_repo.tag_validators.get (blacklist.name)
             if not validator:
                 "Blacklist for name %s applies to no known tags" % blacklist.name
                 continue
