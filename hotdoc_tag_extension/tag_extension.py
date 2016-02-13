@@ -102,32 +102,7 @@ def parse_choice_blacklist(blacklist):
 
 class TagExtension(BaseExtension):
     EXTENSION_NAME='core-tags'
-
-    def __init__(self, doc_repo, args):
-        BaseExtension.__init__(self, doc_repo, args)
-
-        self.blacklists = []
-
-        tag_prototypes = args.get('tag_prototypes', [])
-
-        for prototype in tag_prototypes:
-            validator = validator_from_prototype(prototype)
-            if validator:
-                doc_repo.register_tag_validator(validator)
-
-        blacklist_prototypes = args.get('choices_blacklist', [])
-
-        for prototype in blacklist_prototypes:
-            blacklist = parse_choice_blacklist(prototype)
-            if not blacklist:
-                continue
-
-            validator = doc_repo.tag_validators.get (blacklist.name)
-            if not validator:
-                "Blacklist for name %s applies to no known tags" % blacklist.name
-                continue
-
-            self.blacklists.append(blacklist)
+    blacklists = []
 
     def setup(self):
         Formatter.formatting_symbol_signal.connect(self.__formatting_symbol)
@@ -136,7 +111,7 @@ class TagExtension(BaseExtension):
         if isinstance(symbol, QualifiedSymbol):
             return True
 
-        for blacklist in self.blacklists:
+        for blacklist in TagExtension.blacklists:
             tag = symbol.comment.tags.get(blacklist.name)
             if not tag:
                 continue
@@ -157,6 +132,30 @@ class TagExtension(BaseExtension):
         group.add_argument('--choices-blacklist', action="store",
                 help="filter out symbols based on their tags",
                 nargs='+', dest='choices_blacklist')
+
+    @staticmethod
+    def parse_config(doc_repo, config):
+        tag_prototypes = config.get('tag_prototypes', [])
+
+        for prototype in tag_prototypes:
+            validator = validator_from_prototype(prototype)
+            if validator:
+                doc_repo.register_tag_validator(validator)
+
+        blacklist_prototypes = config.get('choices_blacklist', [])
+
+        for prototype in blacklist_prototypes:
+            blacklist = parse_choice_blacklist(prototype)
+            if not blacklist:
+                continue
+
+            validator = doc_repo.tag_validators.get (blacklist.name)
+            if not validator:
+                "Blacklist for name %s applies to no known tags" % blacklist.name
+                continue
+
+            TagExtension.blacklists.append(blacklist)
+
 
 def get_extension_classes():
     return [TagExtension]
