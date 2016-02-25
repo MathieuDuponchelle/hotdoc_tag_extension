@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "hotdoc_tag_extension",
-    version = "0.6.9",
+    version = "0.7",
     keywords = "tags metadata custom filtering hotdoc",
     url='https://github.com/hotdoc/hotdoc_tag_extension',
     author_email = 'mathieu.duponchelle@opencreed.com',
