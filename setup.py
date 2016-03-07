@@ -16,11 +16,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 from setuptools import setup, find_packages
+
+with open(os.path.join('hotdoc_tag_extension', 'VERSION.txt'), 'r') as _:
+    VERSION = _.read().strip()
 
 setup(
     name = "hotdoc_tag_extension",
-    version = "0.7",
+    version = VERSION,
     keywords = "tags metadata custom filtering hotdoc",
     url='https://github.com/hotdoc/hotdoc_tag_extension',
     author_email = 'mathieu.duponchelle@opencreed.com',
@@ -29,5 +34,6 @@ setup(
                     " and filtering the output based on symbol's tags"),
     author = "Mathieu Duponchelle",
     packages = find_packages(),
+    package_data = {'hotdoc_tag_extension': ['VERSION.txt']},
     entry_points = {'hotdoc.extensions': 'get_extension_classes = hotdoc_tag_extension.tag_extension:get_extension_classes'},
 )
