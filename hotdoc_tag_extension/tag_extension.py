@@ -143,10 +143,8 @@ class TagExtension(BaseExtension):
         group = parser.add_argument_group('core tags customization',
                 DESCRIPTION)
         group.add_argument('--multiple-choice-tags', action="store",
-                extra_prompt=MULTIPLE_CHOICE_DESCRIPTION,
                 help="Define multiple choice tags",
-                nargs='+', dest='tag_prototypes',
-                validate_function=validate_prototypes)
+                nargs='+', dest='tag_prototypes')
         group.add_argument('--choices-blacklist', action="store",
                 help="filter out symbols based on their tags",
                 nargs='+', dest='choices_blacklist')
