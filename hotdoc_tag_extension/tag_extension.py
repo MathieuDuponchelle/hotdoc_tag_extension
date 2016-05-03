@@ -119,7 +119,7 @@ def parse_choice_blacklist(blacklist):
     return MultipleChoiceTagBlackList(name, choices)
 
 class TagExtension(BaseExtension):
-    EXTENSION_NAME='core-tags'
+    extension_name='core-tags'
     blacklists = []
 
     def setup(self):
